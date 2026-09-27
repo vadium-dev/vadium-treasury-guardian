@@ -1,0 +1,16 @@
+# First (and so far only) third-party dependency. Only used for
+# keccak256 — verifying Circle agent wallet signatures turned out to need
+# an on-chain ERC-1271 isValidSignature() call (agent wallets are
+# smart-contract accounts, not plain keypairs — confirmed empirically in
+# docs/SETUP.md, not assumed), computed against an EIP-191 personal-sign
+# hash. Hand-rolling keccak256 would be reinventing a cryptographic
+# primitive; using the standard library for just the hash function is the
+# minimal correct choice, not scope creep. See ledger/auth.py.
+eth-utils==6.0.0
+
+# mvp/ — free lookup MVP (docs/IDEA.md): our own ledger + ERC-8004 public
+# reputation, raw and Sybil-adjusted. Free by design, not priced via x402.
+fastapi==0.141.1
+uvicorn[standard]==0.54.0
+web3==8.0.0
+requests==2.34.2

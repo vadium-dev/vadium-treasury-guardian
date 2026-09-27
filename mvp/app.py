@@ -1,0 +1,217 @@
+"""Free, unpriced HTTP endpoint — the whole point is measuring
+discoverability, not revenue (see the discussion in docs/IDEA.md this
+was scoped against). Rate-limited per caller as an abuse guard only,
+never a paywall.
+
+Run locally:
+    .venv/bin/uvicorn mvp.app:app --reload --port 8000
+
+Then:
+    curl "http://localhost:8000/lookup/123"
+    curl "http://localhost:8000/lookup/123?reviewers=0xabc...,0xdef..."
+"""
+
+import os
+import time
+from collections import defaultdict
+from datetime import datetime, timezone
+
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import JSONResponse
+
+from mvp.lookup import lookup
+
+app = FastAPI(
+    title="Vadium Lookup (MVP)",
+    description=(
+        "Free trust-record lookup for an ERC-8004 agentId: our own Phase 2 "
+        "evidence-ledger history, plus ERC-8004's public reputation feedback "
+        "shown both raw and Sybil-adjusted (diversity-weighted by funding "
+        "cluster). No payment required — this endpoint exists to test "
+        "discoverability, not to generate revenue."
+    ),
+)
+
+# Abuse guard, not a paywall: a simple fixed-window limiter, per caller —
+# fixed 2026-09-27, was keyed "global" (one shared bucket for every
+# caller), which meant one aggressive or buggy caller could exhaust the
+# whole quota for everyone else, including whichever discovery channel
+# we most want signal from. Keyed by IP now, not a real caller identity
+# (we have none pre-payment), which is an honest limitation, not a
+# pretense of strong identity.
+_RATE_LIMIT = 30  # requests
+_RATE_WINDOW = 60  # seconds
+_calls: dict[str, list[float]] = defaultdict(list)
+
+# Per-channel discovery counters (ADR discussion: "measure discoverability
+# irrespective of mode" — MCP, ERC-8004 self-listing, marketplace listings
+# all point at this same endpoint with a different `via` value so we can
+# actually compare, not guess). In-memory, resets on redeploy/restart —
+# real numbers also go to stdout below, which Render retains in its own
+# log history, so a restart doesn't erase the only record.
+_discovery_counts: dict[str, int] = defaultdict(int)
+
+
+def _client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()  # first hop = real client, per Render's proxy convention
+    return request.client.host if request.client else "unknown"
+
+
+def _check_rate_limit(caller_key: str):
+    now = time.time()
+    recent = [t for t in _calls[caller_key] if now - t < _RATE_WINDOW]
+    if len(recent) >= _RATE_LIMIT:
+        raise HTTPException(status_code=429, detail="rate limit exceeded — try again shortly")
+    recent.append(now)
+    _calls[caller_key] = recent
+
+
+@app.get("/lookup/{agent_id}")
+def get_lookup(
+    agent_id: int,
+    request: Request,
+    reviewers: str | None = Query(
+        default=None,
+        description="Comma-separated reviewer addresses, temporary workaround "
+                     "until on-chain reviewer discovery is wired up — see "
+                     "mvp/erc8004_client.py",
+    ),
+    via: str = Query(
+        default="direct",
+        description="Which discovery channel sent this caller here — e.g. "
+                     "mcp, erc8004-registry, circle-marketplace. Set this in "
+                     "each listing's documented URL so discoverability is "
+                     "measurable per channel, not guessed at.",
+    ),
+):
+    caller_ip = _client_ip(request)
+    _check_rate_limit(caller_key=caller_ip)
+    _discovery_counts[via] += 1
+    print(
+        f"lookup agent_id={agent_id} via={via} caller_ip={caller_ip} "
+        f"at={datetime.now(timezone.utc).isoformat()}",
+        flush=True,
+    )
+    known = [a.strip() for a in reviewers.split(",")] if reviewers else None
+    try:
+        return lookup(agent_id, known_reviewers=known)
+    except Exception as e:  # noqa: BLE001 — a lookup failure should be a clear message, not a stack trace to the caller
+        return JSONResponse(status_code=502, content={"error": str(e)})
+
+
+@app.get("/stats")
+def stats():
+    """In-memory only — real, durable record is the stdout log lines
+    above, visible in Render's own log history. This is a convenience
+    view, not the source of truth, and resets on redeploy/restart.
+    """
+    return {"discovery_counts_by_channel": dict(_discovery_counts)}
+
+
+# ============================================================
+# Paid twin of the same lookup, via x402 — NOT the "real" version of
+# this product, a deliberate second instrument. The free route above
+# stays the default and the one everywhere else (MCP, README) points
+# to. This one exists for two things the free route structurally can't
+# measure: (1) willingness-to-pay, directly, not inferred from someone
+# else's comparable; (2) x402 Bazaar's discovery mechanism is
+# payment-triggered — a service is only auto-indexed once the CDP
+# facilitator processes a real payment against it, so a free-only
+# endpoint is invisible there no matter how it's listed.
+#
+# Disabled entirely (route never registered) unless X402_PAY_TO_ADDRESS
+# is set — no half-configured payment route silently accepting
+# requests it can't actually settle.
+# ============================================================
+
+X402_PAY_TO_ADDRESS = os.environ.get("X402_PAY_TO_ADDRESS")
+
+if X402_PAY_TO_ADDRESS:
+    from cdp.x402 import create_facilitator_config
+    from x402.http import HTTPFacilitatorClient, PaymentOption
+    from x402.http.middleware.fastapi import PaymentMiddlewareASGI
+    from x402.http.types import RouteConfig
+    from x402.mechanisms.evm.exact import ExactEvmServerScheme
+    from x402.schemas import Network
+
+    from x402.server import x402ResourceServer
+
+    _BASE_MAINNET: Network = "eip155:8453"
+
+    # create_facilitator_config() reads CDP_API_KEY_ID/CDP_API_KEY_SECRET
+    # from the environment and points at Coinbase's CDP facilitator
+    # either way — without those set, verify/settle calls will fail
+    # (expected, not a crash) until real credentials are added; the 402
+    # challenge itself is generated locally and works regardless.
+    _facilitator = HTTPFacilitatorClient(create_facilitator_config())
+    _x402_server = x402ResourceServer(_facilitator)
+    _x402_server.register(_BASE_MAINNET, ExactEvmServerScheme())
+
+    _PAID_PRICE = "$0.001"  # matches the x402 quickstart's own example; trivial by design, not a revenue price
+
+    app.add_middleware(
+        PaymentMiddlewareASGI,
+        routes={
+            # This SDK's own path syntax (":param" / "[param]" / "*"), NOT
+            # FastAPI's "{param}" — confirmed by reading
+            # x402_http_server_base.py's _parse_route_pattern directly
+            # after "{agent_id}" silently matched nothing and let requests
+            # through unprotected. Verify against real traffic again if
+            # this SDK version ever changes.
+            "GET /lookup-paid/:agent_id": RouteConfig(
+                accepts=[
+                    PaymentOption(
+                        scheme="exact",
+                        pay_to=X402_PAY_TO_ADDRESS,
+                        price=_PAID_PRICE,
+                        network=_BASE_MAINNET,
+                    ),
+                ],
+                mime_type="application/json",
+                description=(
+                    "Same lookup as /lookup/{agentId} — this route exists to "
+                    "measure willingness-to-pay and x402 Bazaar discoverability, "
+                    "not because the result is different or better paid."
+                ),
+            ),
+        },
+        server=_x402_server,
+    )
+
+    @app.get("/lookup-paid/{agent_id}")
+    def get_lookup_paid(
+        agent_id: int,
+        request: Request,
+        reviewers: str | None = Query(default=None),
+        via: str = Query(default="x402-paid"),
+    ):
+        caller_ip = _client_ip(request)
+        _check_rate_limit(caller_key=caller_ip)  # still a guard, even though payment itself throttles most abuse
+        _discovery_counts[via] += 1
+        print(
+            f"lookup_paid agent_id={agent_id} via={via} caller_ip={caller_ip} "
+            f"at={datetime.now(timezone.utc).isoformat()}",
+            flush=True,
+        )
+        known = [a.strip() for a in reviewers.split(",")] if reviewers else None
+        try:
+            return lookup(agent_id, known_reviewers=known)
+        except Exception as e:  # noqa: BLE001
+            return JSONResponse(status_code=502, content={"error": str(e)})
+else:
+    print("X402_PAY_TO_ADDRESS not set — /lookup-paid route disabled, free /lookup route unaffected", flush=True)
+
+
+@app.get("/")
+def root():
+    return {
+        "service": "Vadium Lookup (MVP)",
+        "by": "Atesta",
+        "status": "free, no payment required",
+        "usage": "GET /lookup/{agentId}",
+        "note": "This is Phase 2 (evidence ledger + public reputation lookup), "
+                "not the collateral/dispute-resolution product — that's Phase 3, "
+                "designed but not yet built.",
+    }
