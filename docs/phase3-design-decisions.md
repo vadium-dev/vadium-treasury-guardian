@@ -1234,3 +1234,49 @@ work) or too loose (limits wide enough the scope check does no real
 work) — the principle (explicit, mutual, checkable, frozen at job
 start) is fixed; the exact scope shape is a tuning question for real
 data, the same discipline as every other threshold in this document.
+
+## ADR-016: Identity anchors accountability, not payment destination — generalizing the individual-agent case of the ratee/payee gap
+
+**Decision**: reputation and collateral attribution key exclusively off
+an agent's (or Organization's, per ADR-015) registered ERC-8004
+identity — `agentId`/`agentWallet`, fixed once at registration. The
+wallet address that actually receives payment for any given job
+(`payTo`) is a separate, mutable, per-job routing detail and has no
+bearing on reputation or collateral attribution, ever. Discover-step
+lookups, collateral locking, feedback aggregation, and dispute
+resolution all read `agentId` (or organization identity); none of them
+read, store, or depend on a payment destination.
+
+**Why**: ADR-015 already established this at the organization level —
+"a payTo/treasury address sitting between many worker-agents and one
+payment address is routinely not the agent that did the work." The same
+gap exists one level down, at a single, non-organizational agent's own
+registration: a buyer looks up and a dispute attaches to `agentWallet`,
+not to wherever a specific job's payment happened to land. Payment
+routing legitimately varies for entirely benign reasons — a different
+hirer, an escrow intermediary, a wallet chosen purely for custody
+convenience — and tying attribution to it would mean reputation and
+collateral silently break on ordinary operational changes, while also
+leaving open a laundering vector: an operator could let one identity
+carry the reputation and collateral exposure while directing all actual
+proceeds to an entirely separate, unaccountable wallet. Keying
+attribution to the immutable registered identity instead closes both
+problems the same way.
+
+**Confirms, in our own infrastructure, exactly the gap raised publicly**
+on ERC-8004 issue #99 (`docs/erc8004-issue-99-followup.md`) and observed
+concretely during our own MVP self-registration
+(`docs/erc8004-mvp-verification.md`'s "Known ratee/payee split" note):
+the wallet used to register the lookup service
+(`0xFC414bE58228fe5dBe961B74225548D29b8abeFA`, CDP-managed, the only one
+this process can sign for) is deliberately different from the wallet
+used as `X402_PAY_TO_ADDRESS` (user-held). That split is safe under this
+ADR precisely because nothing here — nor should it — ever attributes
+reputation or collateral based on `payTo`.
+
+**Revisit if**: a future mechanism (e.g. an escrow or automated payout
+path) needs to verify a specific payment actually originated from, or
+was authorized by, the registered identity's controller — that's a
+narrower, legitimate fraud/spoofing check on the payment leg itself, and
+would be a separate verification, not a reason to fold payment
+destination into the reputation/collateral attribution model.

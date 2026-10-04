@@ -139,6 +139,89 @@ via the API. Works fine as a manual step for now; worth connecting the
 GitHub App properly in Render's dashboard if this repo sees frequent
 pushes going forward.
 
+## Known ratee/payee split — by design, per ADR-016 — 2026-09-27
+
+Self-registration (below) uses a CDP-managed wallet
+(`0xFC414bE58228fe5dBe961B74225548D29b8abeFA`) as `agentWallet`, because
+that's the only wallet whose keys this process can actually sign with.
+`X402_PAY_TO_ADDRESS` for the paid route is a separate, user-held wallet
+(`0x6D9BfB01D003A680b1809E96C0D4003be2ec87d0`), chosen deliberately so
+payment funds land somewhere the user holds the seed for directly, not
+somewhere requiring CDP API credentials to withdraw from.
+
+This is the same ratee/payee gap raised in the `erc8004-issue-99`
+follow-up comment, at the individual-agent level rather than the
+organization level ADR-015 already covered. Formalized as
+**ADR-016** (`docs/phase3-design-decisions.md`): reputation and
+collateral attribution key off the registered identity (`agentWallet`),
+never off `payTo` — which is expected to rotate, and does here. This
+identity isn't wired into Phase 3's collateral/dispute logic yet, so
+there's nothing live depending on the distinction today, but the split
+itself is the correct, intended shape going forward, not a shortcut
+taken because the stakes happen to be low.
+
+## Self-registered on-chain — 2026-09-27
+
+Vadium Lookup registered itself as an ERC-8004 identity for real, on Base
+mainnet, from the CDP-managed wallet (see the ratee/payee note above for
+why that wallet, not the user's own).
+
+1. **`register()`** (bare, no args) — tx
+   `0xcc9bac8b7aadb20be687926e6f72f583e1b7fb641a45d9501a17df8bcafcadc8`,
+   block 51858284, 106,883 gas. Decoded the `Registered` event from the
+   receipt directly rather than guessing: **agentId = 95910**, owner =
+   `0xFC414bE58228fe5dBe961B74225548D29b8abeFA`.
+2. Set `ERC8004_AGENT_ID=95910`, redeployed — confirmed
+   `/.well-known/agent-registration.json` now serves a `registrations`
+   entry pointing at this exact agentId and registry address.
+3. **`setAgentURI(95910, ".../agent-registration.json")`** — tx
+   `0x29403fd0fe8662e4b141f3f31eec889dfe5450559d5985ad8b4889bcf384085c`,
+   block 51858373, 123,899 gas.
+4. **Verified, not assumed**: `tokenURI(95910)` on-chain returns exactly
+   the registered URL (needed a few seconds of RPC propagation — first
+   read came back empty, three retries later it was correct — a real,
+   observed lag, not a guess papered over). `ownerOf(95910)` and
+   `getAgentWallet(95910)` both independently resolve to the CDP wallet,
+   confirming the identity is internally consistent.
+
+Total real cost for both transactions: on the order of 0.000001–0.000002
+ETH combined — Base mainnet gas at the time of writing was roughly
+0.005 gwei base fee, making this registration cost a small fraction of a
+cent, not a meaningful expense even repeated many times over.
+
+Registration file used the real ERC8004SPEC.md `registration-v1` schema
+(fetched fresh, not recalled) — `services` lists only what's actually
+live (`web`); deliberately omits an `MCP` entry since our MCP server
+runs over stdio, not a network URL the spec's format expects, and
+omits `A2A`/`OASF`/`ENS`/`DID` entries and `crypto-economic`/
+`tee-attestation` trust claims we don't implement. `supportedTrust` is
+just `["reputation"]` — the one claim that's real.
+
+## Circle Agent Marketplace — submitted 2026-09-27
+
+Verified the real submission mechanism first rather than trusting a
+possibly-stale note: `docs/IDEA.md` described a manual-review Google
+Form, current `developers.circle.com/agent-stack/agent-marketplace/
+get-listed` confirms that's still accurate ("Listings are reviewed and
+approved manually today. A self-serve, automated submission flow is
+coming.") and gave the same form URL independently. Cross-checked the
+form itself before entering anything — footer confirms "This form was
+created inside of Circle Internet Financial Inc."
+
+Submitted: service name Vadium Lookup, website
+`https://vadium-lookup.onrender.com`, category Infrastructure (closest
+fit — no dedicated trust/reputation option), 2 endpoints, pricing model
+described (free + $0.001 USDC x402 tier), docs URL pointing at the live
+FastAPI `/docs`. Mentioned the ERC-8004 self-registration (agentId
+95910) and the discoverability-measurement framing in the free-text
+field. Response confirmed recorded by Circle's own form.
+
+This is now the fifth measurable discovery channel alongside direct,
+MCP, x402 Bazaar, and ERC-8004 registry — and, per the earlier channel
+comparison, the one with the closest audience-market fit, since
+Circle/Arc-native agents are the same population already capable of
+paying via x402.
+
 ## Still open
 
 - No caching yet — `mvp/diversity.py`'s in-process `_funder_cache` only
