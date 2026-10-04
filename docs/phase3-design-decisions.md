@@ -603,6 +603,29 @@ noted here so it isn't lost, consistent with how this document already
 treats forward-looking observations elsewhere (e.g. ADR-002's standards-
 adoption reasoning).
 
+**Field validation, 2026-10-04**: this exact pattern — score a candidate
+against graded, verifiable cases before real stakes exist, so a track
+record already exists by the time it matters — was independently
+re-derived and actually built for a different subject.
+[`vadium-attest`](../../vadium-attest) applies it to ChatGPT-ecosystem
+*sellers' tools* rather than arbiters, for an equivalent cold-start
+problem found in production: `vadium-lookup`'s self-reported
+`report_outcome` mechanism turned out to have no natural incentive for a
+ChatGPT integrator to ever use, so there's no organic way to accumulate a
+track record for those sellers either (see `vadium-lookup/docs/chatgpt-
+apps-warm-start.md` for the full problem statement). vadium-attest's
+staged task battery (`vadium-attest/docs/methodology.md`) is this ADR's
+Calibration Track concept, concretely implemented and already structured
+to run against real test accounts — graded, independently-verified tasks
+with a checkable correct outcome, the same shape as a calibration
+exercise with a known answer key, just verified against live system state
+instead of a pre-written answer. Worth reading before implementing this
+ADR for real: the "never trust the write call's own response, verify
+independently" rule and the consistency (Pass^k) metric there are
+directly reusable design decisions, not just an analogy — see
+[`docs/vadium-project-map.md`](vadium-project-map.md) in this repo for
+how all three repos relate.
+
 **Sequencing decision, covering ADR-006 through ADR-009 at the time,
 now the full ADR-006 through ADR-014 arc**: resolved 2026-09-19 — build
 the full mechanism, not the simplified version, as the project's primary

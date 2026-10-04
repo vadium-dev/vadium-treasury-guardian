@@ -14,6 +14,21 @@ decisions.
 MVP scope right now is spend analytics/alerting only (no escrow/verification
 module yet — that's phase 2, see `docs/IDEA.md`).
 
+## Part of the Vadium project — two sibling repos exist
+
+This repo is one of three. **Read `docs/vadium-project-map.md` before
+assuming this repo is the whole picture** — it explains how arc's Phase 3
+design relates to two shipped/in-progress sibling projects, so changes
+here don't silently duplicate or contradict work already done there.
+
+- `/Users/swathiselvaraju/code/vadium-lookup` — live ERC-8004 trust-lookup
+  MVP, listed in the ChatGPT Apps directory.
+- `/Users/swathiselvaraju/code/vadium-attest` — capability/fulfillment
+  testing research program for ChatGPT-ecosystem tools.
+
+These are siblings, not isolated projects — read files there by absolute
+path whenever cross-referencing helps, same as any file in this repo.
+
 ## Environment
 
 - Python 3.14, managed with `uv` (`.venv` already created via `uv venv`).
