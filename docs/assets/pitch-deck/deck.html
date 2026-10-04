@@ -1,0 +1,226 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Deck archive</title>
+<style>body{background:#333;margin:0;padding:40px;display:flex;flex-direction:column;align-items:center;gap:40px}
+section{width:1920px;height:1080px;position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.4);flex-shrink:0}</style>
+</head><body>
+<section id="cover" style="background:#18150f; color:#f3ede0; font-family:'Source Serif 4', Georgia, serif; padding:128px; display:flex; flex-direction:column; justify-content:space-between">
+<div></div>
+<div style="display:flex; flex-direction:column; gap:36px">
+<svg viewBox="0 0 340 64" aria-label="Vadium" style="width:400px; height:75px">
+<rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="#63c1a4" stroke-width="5"></rect>
+<text x="32" y="41" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="600" fill="#f3ede0" text-anchor="middle">Vd</text>
+<text x="80" y="42" font-family="'Space Grotesk', sans-serif" font-size="34" font-weight="600" letter-spacing="1" fill="#f3ede0">VADIUM</text>
+</svg>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:64px; font-weight:600; line-height:1.15; color:#f3ede0; width:1300px">The collateral and dispute-resolution layer for agent-to-agent commerce</h1>
+<p style="font-family:'Source Serif 4', Georgia, serif; font-size:30px; font-weight:400; color:#b3a890; width:1100px">A pledge an agent posts so its promises can be trusted without a human in the loop.</p>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#b3a890">VADIUM, BY ATESTA &middot; ARC BUILDERS FUND</p>
+</section>
+<section id="problem" data-transition="fade" style="background:#f2ede1; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:44px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#5c5346; font-weight:500">THE PROBLEM</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:48px; font-weight:600; line-height:1.2; width:1500px">Agents transact autonomously. When something goes wrong, there is no recourse.</h1>
+<div style="display:flex; gap:32px; flex:1">
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:40px; display:flex; flex-direction:column; gap:24px; justify-content:space-between">
+<p style="font-size:28px; line-height:1.5">Virtuals Protocol &mdash; co-author of ERC-8183, the escrow standard this ecosystem is built on &mdash; has publicly discussed managing agent transaction volume without escrow.</p>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:28px; font-weight:500; color:#8a5a24">$3M+ in agent transactions, no escrow</p>
+</div>
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:40px; display:flex; flex-direction:column; gap:24px; justify-content:space-between">
+<p style="font-size:28px; line-height:1.5">The standard itself names the gap. ERC-8183&rsquo;s own spec text, plainly:</p>
+<p style="font-size:26px; line-height:1.5; font-style:italic; color:#5c5346">&ldquo;A malicious evaluator can complete or reject arbitrarily.&rdquo; &ldquo;No dispute resolution or arbitration; reject/expire is final.&rdquo;</p>
+</div>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">01</p>
+</section>
+<section id="gap" data-transition="fade" style="background:#18150f; color:#f3ede0; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; justify-content:space-between">
+<div style="display:flex; flex-direction:column; gap:36px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#b3a890; font-weight:500">IN ARC&rsquo;S OWN WORDS</h3>
+<p style="font-family:'Source Serif 4', Georgia, serif; font-size:38px; font-weight:400; line-height:1.4; width:1450px; color:#f3ede0">&ldquo;Payment released on <u>verified completion</u> against an agreed standard.&rdquo;</p>
+<p style="font-family:'Source Serif 4', Georgia, serif; font-size:38px; font-weight:400; line-height:1.4; width:1450px; color:#f3ede0">&ldquo;Underwrite the risks of autonomous agents&hellip; with parametric payouts on <u>verified loss events</u>.&rdquo;</p>
+</div>
+<div style="display:flex; justify-content:space-between; align-items:flex-end">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:26px; color:#63c1a4; width:1050px; line-height:1.6">Never addressed anywhere in the post: who verifies, when the parties disagree. No dispute resolution. No arbitration. No reputation mechanism. That is the entire gap Vadium fills.</p>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#b3a890">02</p>
+</div>
+</section>
+<section id="what" data-transition="fade" style="background:#f2ede1; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#5c5346; font-weight:500">WHAT VADIUM IS</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:44px; font-weight:600; line-height:1.2; width:1550px">Sellers post real collateral. Two payout paths, never one mechanism doing both.</h1>
+<div style="display:flex; gap:24px; flex:1">
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:36px; display:flex; flex-direction:column; gap:18px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:32px; font-weight:600; color:#2f6b58">Objective path</h3>
+<p style="font-size:26px; line-height:1.5">Schema failure, failed attestation, duplicate output. Fully code-verifiable. Slashes automatically &mdash; no human, no committee.</p>
+</div>
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:36px; display:flex; flex-direction:column; gap:18px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:32px; font-weight:600; color:#2f6b58">Discretionary path</h3>
+<p style="font-size:26px; line-height:1.5">A genuine judgment call. Routes to an independent committee vote. Never a single call from us, or from anyone.</p>
+</div>
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:36px; display:flex; flex-direction:column; gap:18px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:32px; font-weight:600; color:#8a5a24">Hedge coverage</h3>
+<p style="font-size:26px; line-height:1.5">A buyer can pre-purchase coverage on a seller. Priced like real insurance &mdash; premium never refunded, payout bounded by what was insured.</p>
+</div>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">Everything keys to the seller&rsquo;s ERC-8004 identity &mdash; never to whichever wallet a payment happens to land in.</p>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">03</p>
+</section>
+<section id="sequence" data-transition="fade" style="background:#f2ede1; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#5c5346; font-weight:500">HOW WE BUILT THIS</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:40px; font-weight:600; line-height:1.2; width:1550px">Each phase removes one risk before spending on the next.</h1>
+<table style="border-collapse:collapse; width:1664px">
+<tr>
+<td style="padding:18px 20px 18px 0; border-bottom:1px solid #ded2bd; font-family:'IBM Plex Mono', monospace; font-size:26px; color:#8a5a24; width:70px">01</td>
+<td style="padding:18px 24px; border-bottom:1px solid #ded2bd; font-size:27px; width:520px">Can we see what an agent is doing?</td>
+<td style="padding:18px 0; border-bottom:1px solid #ded2bd; font-size:26px; color:#5c5346">Phase 1 &mdash; spend monitoring, live against a real Circle Agent Wallet.</td>
+</tr>
+<tr>
+<td style="padding:18px 20px 18px 0; border-bottom:1px solid #ded2bd; font-family:'IBM Plex Mono', monospace; font-size:26px; color:#8a5a24">02</td>
+<td style="padding:18px 24px; border-bottom:1px solid #ded2bd; font-size:27px">Can we prove it later, unfalsifiably?</td>
+<td style="padding:18px 0; border-bottom:1px solid #ded2bd; font-size:26px; color:#5c5346">Phase 2 &mdash; tamper-evident evidence ledger, anchored on-chain.</td>
+</tr>
+<tr>
+<td style="padding:18px 20px 18px 0; border-bottom:1px solid #ded2bd; font-family:'IBM Plex Mono', monospace; font-size:26px; color:#8a5a24">03</td>
+<td style="padding:18px 24px; border-bottom:1px solid #ded2bd; font-size:27px">Does anyone want a trust signal at all?</td>
+<td style="padding:18px 0; border-bottom:1px solid #ded2bd; font-size:26px; color:#5c5346">Free MVP, live &mdash; tested on real ERC-8004 data. Zero legal exposure.</td>
+</tr>
+<tr>
+<td style="padding:18px 20px 18px 0; border-bottom:1px solid #ded2bd; font-family:'IBM Plex Mono', monospace; font-size:26px; color:#8a5a24">04</td>
+<td style="padding:18px 24px; border-bottom:1px solid #ded2bd; font-size:27px">Does the actual mechanism work?</td>
+<td style="padding:18px 0; border-bottom:1px solid #ded2bd; font-size:26px; color:#5c5346">Phase 3 &mdash; proven on Arc testnet. Real money held at exactly zero.</td>
+</tr>
+<tr>
+<td style="padding:18px 20px 18px 0; font-family:'IBM Plex Mono', monospace; font-size:26px; color:#a8432c">05</td>
+<td style="padding:18px 24px; font-size:27px">Is this mechanism compliant?</td>
+<td style="padding:18px 0; font-size:26px; color:#5c5346">The one risk more code can&rsquo;t reduce. Not a gap &mdash; the plan working.</td>
+</tr>
+</table>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">04</p>
+</section>
+<section id="proof" data-transition="fade" style="background:#fbf8f2; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#5c5346; font-weight:500">PROOF, NOT PROMISES</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:40px; font-weight:600; line-height:1.2; width:1550px">Three real disputes, resolved live on Arc testnet, zero real value.</h1>
+<div style="display:flex; gap:24px; flex:1">
+<div style="flex:1; background:#ffffff; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; flex-direction:column; gap:20px; justify-content:space-between">
+<div style="display:flex; flex-direction:column; gap:14px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:28px; font-weight:600">Objective slash</h3>
+<p style="font-size:24px; line-height:1.5; color:#5c5346">Automatic on a code-verifiable failure.</p>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#8a5a24; line-height:1.4">Buyer restitution capped at exactly what they paid</p>
+</div>
+<div style="flex:1; background:#ffffff; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; flex-direction:column; gap:20px; justify-content:space-between">
+<div style="display:flex; flex-direction:column; gap:14px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:28px; font-weight:600">Discretionary verdict</h3>
+<p style="font-size:24px; line-height:1.5; color:#5c5346">A single vote genuinely could not release funds.</p>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#8a5a24; line-height:1.4">Quorum-of-2 enforced on-chain, not in a UI</p>
+</div>
+<div style="flex:1; background:#ffffff; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; flex-direction:column; gap:20px; justify-content:space-between">
+<div style="display:flex; flex-direction:column; gap:14px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:28px; font-weight:600">Hedge coverage</h3>
+<p style="font-size:24px; line-height:1.5; color:#5c5346">A 1 USDC job, 6 USDC of purchased coverage.</p>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#8a5a24; line-height:1.4">Payout followed the coverage, not the job price</p>
+</div>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">BondPool 0x73B2&hellip;2D681 &middot; Job escrow 0xAC5C&hellip;DAFDF &middot; every tx independently verifiable</p>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">05</p>
+</section>
+<section id="market" data-transition="fade" style="background:#f2ede1; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#5c5346; font-weight:500">WHY NOW</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:40px; font-weight:600; line-height:1.2; width:1550px">Real transaction volume already exists. The trust layer doesn&rsquo;t, yet.</h1>
+<div style="display:flex; gap:24px">
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; flex-direction:column; gap:14px">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:44px; font-weight:600; color:#8a5a24">165M</p>
+<p style="font-size:24px; color:#5c5346; line-height:1.4">x402 agent transactions across ~69K active agents, by April 2026</p>
+</div>
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; flex-direction:column; gap:14px">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:44px; font-weight:600; color:#8a5a24">1,000+</p>
+<p style="font-size:24px; color:#5c5346; line-height:1.4">services listed on Circle&rsquo;s own Agent Marketplace</p>
+</div>
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; flex-direction:column; gap:14px">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:44px; font-weight:600; color:#2f6b58">Sep &rsquo;26</p>
+<p style="font-size:24px; color:#5c5346; line-height:1.4">Arc mainnet launched, BlackRock/DTCC/Visa producing blocks</p>
+</div>
+</div>
+<div style="background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; flex-direction:column; gap:16px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:28px; font-weight:600">Competitors validate the category; none solve portability</h3>
+<p style="font-size:25px; line-height:1.55">Kite AI, NEAR&rsquo;s Agent Market, and ASI Alliance each independently built an in-house trust/dispute layer &mdash; the need is real, not hypothetical. Each only works inside that one platform. Vadium is built on open standards (ERC-8004/8183) specifically so it isn&rsquo;t locked to any of them &mdash; already proven across two chains, Base and Arc, with no rework.</p>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">06</p>
+</section>
+<section id="model" data-transition="fade" style="background:#f2ede1; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#5c5346; font-weight:500">BUSINESS MODEL</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:40px; font-weight:600; line-height:1.2; width:1550px">Revenue scales with real risk, not a flat subscription.</h1>
+<div style="display:flex; gap:24px; flex:1">
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:36px; display:flex; flex-direction:column; gap:18px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:32px; font-weight:600; color:#2f6b58">Reputation lookup</h3>
+<p style="font-size:26px; line-height:1.55">Free tier live today, priced by agent-usage via x402 in a paid tier. Discovery through the same machine-first channels agents already use &mdash; the ERC-8004 registry, Circle&rsquo;s Agent Marketplace, x402 Bazaar. No separate sales motion.</p>
+</div>
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:36px; display:flex; flex-direction:column; gap:18px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:32px; font-weight:600; color:#8a5a24">Hedge premium</h3>
+<p style="font-size:26px; line-height:1.55">Priced like real insurance: expected loss plus a margin. A buyer&rsquo;s own risk logic chooses to hire it exactly when a transaction warrants it &mdash; self-selecting demand, not a pitch.</p>
+</div>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">Margin improves with scale: marginal cost per verified transaction stays small while the fixed compliance/engineering base amortizes.</p>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">07</p>
+</section>
+<section id="legal" data-transition="fade" style="background:#fbf8f2; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px; justify-content:space-between">
+<div style="display:flex; flex-direction:column; gap:32px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#a8432c; font-weight:500">THE ONE HONEST GAP</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:40px; font-weight:600; line-height:1.2; width:1550px">Real legal review of the collateral mechanism &mdash; not done yet, and not skipped.</h1>
+<p style="font-size:27px; line-height:1.55; width:1400px">Nexus Mutual, the category leader, deliberately did not go pure-smart-contract &mdash; they wrapped a real legal structure around their mechanism specifically because insurance is already a highly regulated space, and no amount of clever code changes how a regulator characterizes the underlying activity. We built the same discipline in from the start: the objective/discretionary split, and holding no custody on either side, are structural choices made with exactly this review in mind.</p>
+</div>
+<div style="background:#ffffff; border:1px solid #ded2bd; border-radius:10px; padding:32px; display:flex; justify-content:space-between; align-items:center; gap:32px">
+<p style="font-size:25px; color:#5c5346; width:1050px; line-height:1.5">Everything upstream of this is already proven, live, on testnet. This is the only remaining step before real value moves &mdash; and it is fundable, not just necessary.</p>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:28px; color:#8a5a24; white-space:nowrap">$20K&ndash;$60K est.</p>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">08</p>
+</section>
+<section id="ask" data-transition="fade" style="background:#18150f; color:#f3ede0; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#b3a890; font-weight:500">THE ASK</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:48px; font-weight:600; line-height:1.2; color:#f3ede0; width:1500px">$100,000 to fund three milestones, in order</h1>
+<div style="display:flex; flex-direction:column; gap:20px">
+<div style="display:flex; gap:28px; align-items:center; border-bottom:1px solid #3a3327; padding:0 0 24px 0">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:28px; color:#e0a75f; width:70px">01</p>
+<p style="font-size:26px; color:#f3ede0; width:650px; line-height:1.4">Complete real legal counsel review of the collateral/insurance design</p>
+<p style="font-size:24px; color:#b3a890; line-height:1.4">The concrete blocker between testnet-proven and live</p>
+</div>
+<div style="display:flex; gap:28px; align-items:center; border-bottom:1px solid #3a3327; padding:0 0 24px 0">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:28px; color:#e0a75f; width:70px">02</p>
+<p style="font-size:26px; color:#f3ede0; width:650px; line-height:1.4">Mainnet deployment with real design-partner collateral</p>
+<p style="font-size:24px; color:#b3a890; line-height:1.4">Once (1) clears &mdash; not before</p>
+</div>
+<div style="display:flex; gap:28px; align-items:center">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:28px; color:#e0a75f; width:70px">03</p>
+<p style="font-size:26px; color:#f3ede0; width:650px; line-height:1.4">Committee mechanism and hedge-premium pricing, calibrated on real dispute data</p>
+<p style="font-size:24px; color:#b3a890; line-height:1.4">Scoped once (1) and (2) are underway</p>
+</div>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#b3a890">09</p>
+</section>
+<section id="team" data-transition="fade" style="background:#f2ede1; color:#201c16; font-family:'Source Serif 4', Georgia, serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:44px">
+<h3 style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#5c5346; font-weight:500">TEAM</h3>
+<h1 style="font-family:'Space Grotesk', sans-serif; font-size:40px; font-weight:600; line-height:1.2; width:1500px">Built and shipped by</h1>
+<div style="display:flex; gap:32px">
+<div style="flex:1; background:#fbf8f2; border:1px solid #ded2bd; border-radius:10px; padding:44px; display:flex; flex-direction:column; gap:18px">
+<h3 style="font-family:'Space Grotesk', sans-serif; font-size:34px; font-weight:600">Vasudevan Surendran</h3>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#8a5a24; letter-spacing:1px">FOUNDER</p>
+<p style="font-size:26px; color:#5c5346; line-height:1.55">Building Vadium end-to-end &mdash; the evidence ledger&rsquo;s Merkle anchoring, the collateral mechanism&rsquo;s payout rules, and the discipline to prove each layer live, on real infrastructure, before asking for capital. Treats legal and regulatory review as a first-class engineering constraint, not an afterthought.</p>
+</div>
+</div>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">Solo build to date.</p>
+<p style="position:absolute; left:128px; bottom:64px; font-family:'IBM Plex Mono', monospace; font-size:24px; color:#5c5346">10</p>
+</section>
+<section id="close" data-transition="fade" style="background:#18150f; color:#f3ede0; font-family:'Source Serif 4', Georgia, serif; padding:128px; display:flex; flex-direction:column; justify-content:space-between">
+<div></div>
+<div style="display:flex; flex-direction:column; gap:32px">
+<svg viewBox="0 0 340 64" aria-label="Vadium" style="width:320px; height:60px">
+<rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="#63c1a4" stroke-width="5"></rect>
+<text x="32" y="41" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="600" fill="#f3ede0" text-anchor="middle">Vd</text>
+<text x="80" y="42" font-family="'Space Grotesk', sans-serif" font-size="34" font-weight="600" letter-spacing="1" fill="#f3ede0">VADIUM</text>
+</svg>
+<p style="font-family:'Source Serif 4', Georgia, serif; font-size:30px; font-weight:400; color:#f3ede0; width:1200px; line-height:1.4">Everything in this deck is live and independently verifiable &mdash; a walkthrough of the real testnet mechanism is available on request.</p>
+</div>
+<div style="display:flex; justify-content:space-between; align-items:flex-end">
+<p style="font-family:'IBM Plex Mono', monospace; font-size:26px; color:#b3a890">vadium@atesta.io</p>
+<p style="font-family:'IBM Plex Mono', monospace; font-size:24px; letter-spacing:2px; color:#b3a890">VADIUM, BY ATESTA</p>
+</div>
+</section>
+</body></html>

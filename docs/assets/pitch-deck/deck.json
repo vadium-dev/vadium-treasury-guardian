@@ -1,0 +1,21 @@
+{
+  "v": 4,
+  "createdOnFiles": { "v": 1, "at": "2026-09-27T19:38:54Z" },
+  "title": "Vadium — Arc Builders Fund",
+  "cover": "cover",
+  "order": ["cover", "problem", "gap", "what", "sequence", "proof", "market", "model", "legal", "ask", "team", "close"],
+  "sections": {
+    "s1": { "description": "The problem and the gap Arc itself named", "start": "problem" },
+    "s2": { "description": "What Vadium is and how it was built", "start": "what" },
+    "s3": { "description": "Proof, market, and business model", "start": "proof" },
+    "s4": { "description": "The legal gate, the ask, and the team", "start": "legal" }
+  },
+  "faces": {
+    "space-grotesk": { "family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" },
+    "source-serif-4": { "family": "Source Serif 4", "href": "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..700&display=swap" },
+    "ibm-plex-mono": { "family": "IBM Plex Mono", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" }
+  },
+  "designSystems": [
+    { "title": "Vadium", "namespace": "vadium", "artifact": "https://claude.ai/artifact/8QXXFRt6XVSnbpxbaebryw", "version": "1790537555-e862", "copiedAt": "2026-09-27T19:38:54Z" }
+  ]
+}

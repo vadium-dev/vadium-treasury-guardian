@@ -1,0 +1,630 @@
+<title>Three Real Disputes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root {
+    --ink: #201c16;
+    --paper: #f7f3ea;
+    --paper-raised: #ffffff;
+    --line: #ddd4c2;
+    --green-deep: #2f6b58;
+    --green-bright: #63c1a4;
+    --gold: #8a5a24;
+    --rust: #a8492f;
+    --muted: #6b6355;
+    --shadow: rgba(32, 28, 22, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #f0ece1;
+      --paper: #17140f;
+      --paper-raised: #211d16;
+      --line: #3a3327;
+      --green-deep: #7fd6b8;
+      --green-bright: #63c1a4;
+      --gold: #d3a25c;
+      --rust: #e08066;
+      --muted: #a89d87;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #f0ece1;
+    --paper: #17140f;
+    --paper-raised: #211d16;
+    --line: #3a3327;
+    --green-deep: #7fd6b8;
+    --green-bright: #63c1a4;
+    --gold: #d3a25c;
+    --rust: #e08066;
+    --muted: #a89d87;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.55;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 64px 24px 96px; }
+
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+
+  /* ---------- Hero ---------- */
+  .brand-mark { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+  .brand-mark svg { display: block; }
+  .brand-mark .by-atesta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    border-left: 1px solid var(--line);
+    padding-left: 12px;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-deep);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green-bright);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--green-bright) 25%, transparent);
+  }
+  h1 {
+    font-size: clamp(34px, 5.5vw, 52px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 18px 0 14px;
+    text-wrap: balance;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0 0 28px;
+  }
+  .lede strong { color: var(--ink); font-weight: 600; }
+
+  .fact-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 32px 0 8px;
+  }
+  .fact {
+    background: var(--paper-raised);
+    padding: 16px 18px;
+  }
+  .fact .num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--green-deep);
+  }
+  .fact .label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ---------- Actors ---------- */
+  section { margin-top: 72px; }
+  .section-head { margin-bottom: 28px; }
+  .section-head .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .section-head h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 6px 0 0;
+    letter-spacing: -0.01em;
+  }
+
+  .actors {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .actor {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .actor .role {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .actor h3 { margin: 6px 0 6px; font-size: 17px; }
+  .actor p { margin: 0; font-size: 13.5px; color: var(--muted); }
+
+  /* ---------- Receipts ---------- */
+  .receipt {
+    background: var(--paper-raised);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px var(--shadow);
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+  .receipt-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 26px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .receipt-head .tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .receipt-head h3 {
+    margin: 4px 0 0;
+    font-size: 20px;
+  }
+  .stamp {
+    flex-shrink: 0;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green-deep);
+    border: 1.5px solid var(--green-deep);
+    border-radius: 999px;
+    padding: 6px 12px;
+    white-space: nowrap;
+    transform: rotate(-2deg);
+  }
+
+  .receipt-body { padding: 22px 26px; }
+  .receipt-body p.narrative {
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0 0 18px;
+  }
+  .receipt-body p.narrative .amt { font-family: 'IBM Plex Mono', monospace; font-weight: 600; color: var(--gold); }
+
+  .flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+  }
+  .flow-block {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .flow-block .who {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .flow-block .change {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 6px;
+    font-variant-numeric: tabular-nums;
+  }
+  .flow-block .change .arrow { color: var(--muted); font-weight: 400; margin: 0 6px; }
+  .flow-block.up .change { color: var(--green-deep); }
+  .flow-block.down .change { color: var(--rust); }
+
+  .bar-row { margin: 6px 0 4px; }
+  .bar-row .bar-label {
+    display: flex; justify-content: space-between;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px; color: var(--muted); margin-bottom: 4px;
+  }
+  .bar-track {
+    height: 10px; border-radius: 999px; background: var(--line);
+    overflow: hidden; position: relative;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--green-deep), var(--green-bright));
+  }
+  .bar-fill.after { background: linear-gradient(90deg, var(--rust), var(--gold)); }
+
+  .rule-note {
+    font-size: 13.5px;
+    color: var(--muted);
+    border-left: 3px solid var(--green-bright);
+    padding: 4px 0 4px 14px;
+    margin: 18px 0;
+  }
+  .rule-note b { color: var(--ink); }
+
+  .tx-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    margin-top: 6px;
+  }
+  .tx-row a {
+    color: var(--green-deep);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--green-deep) 40%, transparent);
+  }
+  .tx-row a:hover { border-bottom-color: var(--green-deep); }
+  .tx-row .tx-label { color: var(--muted); flex-shrink: 0; }
+
+  /* ---------- Verify table ---------- */
+  .verify-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+  }
+  .verify-table th {
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 12px 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-weight: 600;
+  }
+  .verify-table td {
+    padding: 12px 12px 12px 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .verify-table tr:last-child td { border-bottom: none; }
+  .verify-table a { color: var(--green-deep); text-decoration: none; word-break: break-all; }
+  .verify-table a:hover { text-decoration: underline; }
+  .verify-table .what { font-family: 'Space Grotesk', sans-serif; font-size: 13.5px; color: var(--ink); white-space: nowrap; }
+  .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-raised); padding: 16px 20px; }
+
+  /* ---------- Closing ---------- */
+  .closing {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .closing-card {
+    border-radius: 14px;
+    padding: 22px 24px;
+    border: 1px solid var(--line);
+  }
+  .closing-card.limit { background: var(--paper-raised); }
+  .closing-card.next {
+    background: color-mix(in srgb, var(--green-bright) 10%, var(--paper-raised));
+    border-color: color-mix(in srgb, var(--green-bright) 35%, var(--line));
+  }
+  .closing-card .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .closing-card.limit .kicker { color: var(--rust); }
+  .closing-card.next .kicker { color: var(--green-deep); }
+  .closing-card p { font-size: 14px; color: var(--ink); margin: 8px 0 0; }
+
+  @media (max-width: 640px) {
+    .flow, .closing { grid-template-columns: 1fr; }
+    .receipt-head { flex-direction: column; }
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="brand-mark">
+    <svg width="150" height="28" viewBox="0 0 340 64" role="img" aria-label="Vadium">
+      <rect x="3" y="3" width="58" height="58" rx="12" fill="none" stroke="var(--green-bright)" stroke-width="5"></rect>
+      <text x="32" y="41" font-family="'Space Grotesk', sans-serif" font-size="26" font-weight="600" fill="var(--ink)" text-anchor="middle">Vd</text>
+      <text x="80" y="42" font-family="'Space Grotesk', sans-serif" font-size="34" font-weight="600" letter-spacing="1" fill="var(--ink)">VADIUM</text>
+    </svg>
+    <span class="by-atesta">by Atesta</span>
+  </div>
+
+  <div class="eyebrow">Arc Testnet &middot; 2026-09-27</div>
+  <h1>Three real disputes, on real infrastructure, for zero real money.</h1>
+  <p class="lede">
+    On 2026&#8209;09&#8209;27, Vadium's collateral and dispute mechanism ran
+    end&#8209;to&#8209;end on Arc testnet &mdash; a real seller, a real buyer, a
+    real three&#8209;person committee, and a real deployed <span class="mono">BondPool</span>
+    contract. <strong>No part of this is illustrative.</strong> Every number
+    below was read back from live chain state after the fact, and every
+    transaction links to Arc's own block explorer so you can check it
+    yourself.
+  </p>
+
+  <div class="fact-strip">
+    <div class="fact"><div class="num">3</div><div class="label">real disputes resolved</div></div>
+    <div class="fact"><div class="num">2</div><div class="label">payout paths exercised</div></div>
+    <div class="fact"><div class="num">6</div><div class="label">independent wallets involved</div></div>
+    <div class="fact"><div class="num">$0</div><div class="label">real economic value at risk</div></div>
+  </div>
+
+  <section>
+    <div class="section-head">
+      <div class="kicker">Who's on chain</div>
+      <h2>The actors</h2>
+    </div>
+    <div class="actors">
+      <div class="actor">
+        <div class="role">Seller</div>
+        <h3>Agent 896867</h3>
+        <p>Registered on Arc testnet's real ERC&#8209;8004 identity registry. Posts collateral, does the work.</p>
+      </div>
+      <div class="actor">
+        <div class="role">Buyer</div>
+        <h3>Agent 896868</h3>
+        <p>Also independently registered. Pays for jobs, disputes bad outcomes, sometimes buys coverage first.</p>
+      </div>
+      <div class="actor">
+        <div class="role">Vadium</div>
+        <h3>The evaluator</h3>
+        <p>Never holds funds. Only ever tells the escrow contract what the code &mdash; or the committee &mdash; already decided.</p>
+      </div>
+      <div class="actor">
+        <div class="role">Committee</div>
+        <h3>3 independent jurors</h3>
+        <p>Vote on judgment&#8209;call disputes. A single vote is structurally not enough to release anything.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="kicker">Scenario 1 of 3</div>
+      <h2>The objective path</h2>
+    </div>
+
+    <div class="receipt">
+      <div class="receipt-head">
+        <div>
+          <div class="tag">Job 1 &middot; Tier 0/1 evidence &middot; fully automatic</div>
+          <h3>A schema failure needs no judgment call</h3>
+        </div>
+        <div class="stamp">&#10003; verified on-chain</div>
+      </div>
+      <div class="receipt-body">
+        <p class="narrative">
+          Buyer funds a <span class="amt">5 USDC</span> job. Seller has
+          <span class="amt">15 USDC</span> locked as collateral. The
+          deliverable fails an objective check &mdash; no human, no
+          committee, just code: Vadium's evaluator calls <span class="mono">reject()</span>
+          with a reason code the contract itself recognizes, and the slash
+          happens automatically in the same transaction.
+        </p>
+
+        <div class="bar-row">
+          <div class="bar-label"><span>Seller's locked collateral</span><span>15 &rarr; 5 USDC</span></div>
+          <div class="bar-track"><div class="bar-fill after" style="width:33%"></div></div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-block up">
+            <div class="who">Buyer receives</div>
+            <div class="change">10.0 <span class="arrow">USDC</span></div>
+          </div>
+          <div class="flow-block down">
+            <div class="who">Shared pool receives</div>
+            <div class="change">5.0 <span class="arrow">USDC</span></div>
+          </div>
+        </div>
+
+        <div class="rule-note">
+          <b>Proves ADR&#8209;013, rule 1 &amp; rule 3:</b> the buyer's total
+          gain (5 USDC escrow refund + 5 USDC restitution) is capped at
+          exactly what they paid &mdash; not a cent more &mdash; and the
+          remaining slashed collateral goes to the shared pool, never back
+          to the disputer.
+        </div>
+
+        <div class="tx-row">
+          <span class="tx-label">reject() tx</span>
+          <a href="https://testnet.arcscan.app/tx/0x39441b642c484587e3c6b169fed9b91998f0cefc6cf36d042c86614cc9cc07b4" target="_blank" rel="noopener">0x3944&hellip;c07b4</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="kicker">Scenario 2 of 3</div>
+      <h2>The discretionary path</h2>
+    </div>
+
+    <div class="receipt">
+      <div class="receipt-head">
+        <div>
+          <div class="tag">Job 2 &middot; Tier 2/3 evidence &middot; a real judgment call</div>
+          <h3>One vote isn't enough &mdash; and the chain proved it</h3>
+        </div>
+        <div class="stamp">&#10003; verified on-chain</div>
+      </div>
+      <div class="receipt-body">
+        <p class="narrative">
+          A <span class="amt">2 USDC</span> job goes to committee. Juror 1
+          votes to uphold the dispute. Calling
+          <span class="mono">executeDiscretionaryVerdict()</span> right then
+          &mdash; from any address, including Vadium's own deployer &mdash;
+          <strong>reverted</strong>. Not a UI restriction: the contract
+          itself refused. Only once Juror 2 also voted did quorum exist,
+          and only then did the same slash math as the objective path run.
+        </p>
+
+        <div class="bar-row">
+          <div class="bar-label"><span>Seller's locked collateral</span><span>5 &rarr; 1 USDC</span></div>
+          <div class="bar-track"><div class="bar-fill after" style="width:20%"></div></div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-block down">
+            <div class="who">1-of-2 vote, execute attempt</div>
+            <div class="change" style="color:var(--rust)">reverted</div>
+          </div>
+          <div class="flow-block up">
+            <div class="who">2-of-2 vote, execute attempt</div>
+            <div class="change">succeeded</div>
+          </div>
+        </div>
+
+        <div class="rule-note">
+          <b>Proves ADR&#8209;001's core structural claim:</b> a discretionary
+          payout cannot be triggered by a single call &mdash; ours or anyone
+          else's &mdash; only by a real, on-chain quorum of independent votes.
+        </div>
+
+        <div class="tx-row">
+          <span class="tx-label">executeDiscretionaryVerdict() tx</span>
+          <a href="https://testnet.arcscan.app/tx/0x0440ecf3c8aa5860ecaebaf5058cf49973a54a0da354a55e146576b1f519b422" target="_blank" rel="noopener">0x0440&hellip;19b422</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="kicker">Scenario 3 of 3</div>
+      <h2>The hedge product</h2>
+    </div>
+
+    <div class="receipt">
+      <div class="receipt-head">
+        <div>
+          <div class="tag">Job 3 &middot; purchased coverage &middot; the insurance-shaped claim</div>
+          <h3>Coverage governs the payout &mdash; not the job's price</h3>
+        </div>
+        <div class="stamp">&#10003; verified on-chain</div>
+      </div>
+      <div class="receipt-body">
+        <p class="narrative">
+          This job was only worth <span class="amt">1 USDC</span>. But the
+          buyer had separately purchased <span class="amt">6 USDC</span> of
+          coverage on this seller, paying a <span class="amt">1 USDC</span>
+          premium up front. When the job failed, the buyer's restitution
+          was governed by the <strong>coverage amount</strong>, not the tiny
+          job price &mdash; and the premium had already landed in the shared
+          pool the moment it was paid, win or lose.
+        </p>
+
+        <div class="bar-row">
+          <div class="bar-label"><span>Seller's locked collateral</span><span>11 &rarr; 0 USDC</span></div>
+          <div class="bar-track"><div class="bar-fill after" style="width:0%"></div></div>
+        </div>
+
+        <div class="flow">
+          <div class="flow-block up">
+            <div class="who">Buyer receives (1 refund + 6 coverage)</div>
+            <div class="change">7.0 <span class="arrow">USDC</span></div>
+          </div>
+          <div class="flow-block down">
+            <div class="who">Shared pool, this job</div>
+            <div class="change">5.0 <span class="arrow">USDC</span></div>
+          </div>
+        </div>
+
+        <div class="rule-note">
+          <b>Proves ADR&#8209;014:</b> a buyer's payout ceiling tracks what
+          they insured, not what the job happened to cost &mdash; the actual
+          shape of an insurance product, not a coincidence of pricing. And
+          the premium never came back, even hypothetically, once paid
+          (ADR&#8209;013 rule 2).
+        </div>
+
+        <div class="tx-row">
+          <span class="tx-label">reject() tx</span>
+          <a href="https://testnet.arcscan.app/tx/0xba8838e98243cef904a96c6c0e94f6630956d2acc33a5d27708351095d486f8c" target="_blank" rel="noopener">0xba88&hellip;5d486f8c</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="kicker">Nothing here asks for trust</div>
+      <h2>Verify it yourself</h2>
+    </div>
+    <div class="table-scroll">
+      <table class="verify-table">
+        <thead>
+          <tr><th>What</th><th>Address / ID</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="what">BondPool (ours)</td>
+            <td><a href="https://testnet.arcscan.app/address/0x73B2bE54639BE40FB549A6023798Fee3eF42D681" target="_blank" rel="noopener">0x73B2bE54639BE40FB549A6023798Fee3eF42D681</a></td>
+          </tr>
+          <tr>
+            <td class="what">ERC8183 job escrow (ours, real reference implementation)</td>
+            <td><a href="https://testnet.arcscan.app/address/0xAC5C72D2F4E633c97314b755761CCB16E44DAFDF" target="_blank" rel="noopener">0xAC5C72D2F4E633c97314b755761CCB16E44DAFDF</a></td>
+          </tr>
+          <tr>
+            <td class="what">ERC-8004 IdentityRegistry (not ours &mdash; Arc's real deployment)</td>
+            <td><a href="https://testnet.arcscan.app/address/0x8004A818BFB912233c491871b3d84c89A494BD9e" target="_blank" rel="noopener">0x8004A818BFB912233c491871b3d84c89A494BD9e</a></td>
+          </tr>
+          <tr>
+            <td class="what">Seller's on-chain identity</td>
+            <td>agentId 896867</td>
+          </tr>
+          <tr>
+            <td class="what">Buyer's on-chain identity</td>
+            <td>agentId 896868</td>
+          </tr>
+          <tr>
+            <td class="what">Payment / collateral token</td>
+            <td>Arc testnet USDC &mdash; <a href="https://testnet.arcscan.app/address/0x3600000000000000000000000000000000000000" target="_blank" rel="noopener">0x3600&hellip;0000</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="closing">
+    <div class="closing-card limit">
+      <div class="kicker">What this doesn't prove</div>
+      <p>This is testnet money with no real value, and real legal counsel
+      review of ADR&#8209;001/ADR&#8209;013 hasn't happened yet. Nothing here
+      is live with real collateral, and nothing will be until that review
+      completes.</p>
+    </div>
+    <div class="closing-card next">
+      <div class="kicker">What's next</div>
+      <p>The natural extension: hand these roles to real people with their
+      own testnet wallets &mdash; register an agent, list it, get hired,
+      get disputed &mdash; and see whether the mechanism still holds up
+      when someone else is playing adversarially, not just watching.</p>
+    </div>
+  </div>
+
+</div>

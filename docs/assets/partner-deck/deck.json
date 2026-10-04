@@ -1,0 +1,20 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-09-19T19:00:00Z"},
+  "title": "Vadium, by Atesta",
+  "order": ["cover", "problem", "why-now", "solution", "standards", "live-today", "ask", "for-you", "next-steps", "closing"],
+  "cover": "cover",
+  "sections": {
+    "s1": {"description": "Opening", "start": "cover"},
+    "s2": {"description": "The problem, and why it is opening at real scale now", "start": "problem"},
+    "s3": {"description": "What we are building, and how it fits standards already in use", "start": "solution"},
+    "s4": {"description": "Proof this is real today, and the design-partner ask", "start": "live-today"},
+    "s5": {"description": "What this looks like for a marketplace, and next steps", "start": "for-you"}
+  },
+  "faces": {
+    "source-serif-4": {"family": "Source Serif 4", "href": "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400..700&display=swap"},
+    "space-grotesk": {"family": "Space Grotesk", "href": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap"},
+    "ibm-plex-mono": {"family": "IBM Plex Mono", "href": "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&display=swap"}
+  },
+  "designSystems": []
+}
